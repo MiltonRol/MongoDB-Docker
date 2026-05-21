@@ -1,0 +1,45 @@
+version: "3.9"              # Versión del formato de docker-compose (no de Docker)
+
+services:                   # Aquí defines los servicios (contenedores) que quieres levantar
+
+  mongodb-botiga:           # Nombre lógico del servicio (lo usas dentro de la red de Docker)
+    image: mongo:7.0        # Imagen de Docker que se usará (mongo versión 7.0)
+    container_name: mongodb-botiga   # Nombre del contenedor (para verlo con `docker ps`)
+    ports:
+      - "27017:27017"       # host:contenedor → expone el puerto 27017 del contenedor al host
+    environment:            # Variables de entorno que se pasan al contenedor
+      MONGO_INITDB_ROOT_USERNAME: alumne   # Usuario administrador de MongoDB
+      MONGO_INITDB_ROOT_PASSWORD: alumne   # Contraseña del admin
+    volumes:                # Volúmenes (persistencia de datos y scripts de init)
+      - ./data:/data/db                 # Bind mount: carpeta local ./data → /data/db en el contenedor
+      - ./mongo-init:/docker-entrypoint-initdb.d  # Scripts de inicialización
+    networks:               # Redes a las que se conecta este servicio
+      - xarxa-botiga
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  mongoexpress-botiga:
+    image: mongo-express:1.0
+    container_name: mongoexpress-botiga
+    ports:
+      - "8081:8081"         # Accederás a Mongo Express en http://localhost:8081
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://alumne:alumne@mongodb-botiga:27017/?authSource=admin
+      ME_CONFIG_MONGODB_ADMINUSERNAME: alumne
+      ME_CONFIG_MONGODB_ADMINPASSWORD: alumne
+      #ME_CONFIG_MONGODB_URL: mongodb://alumne:alumne@mongodb-botiga:27017/
+      # URL de conexión a MongoDB:
+      # mongodb://usuario:password@nombre-servicio:puerto/
+    depends_on:
+      mongodb-botiga:           # Indica que este servicio depende de otro
+        condition: service_healthy
+    restart: unless-stopped # Política de reinicio: se reinicia salvo que lo pares tú
+    networks:
+      - xarxa-botiga
+
+networks:                   # Definición de redes personalizadas
+  xarxa-botiga:             # Nombre de la red
+    driver: bridge          # Tipo de red (bridge = red interna de Docker)
