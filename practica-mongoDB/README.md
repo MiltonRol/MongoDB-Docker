@@ -3,11 +3,9 @@ Per fer aquesta pràctica necessites: SCV al núvol (GitHub o GitLab) i Docker
  
 **Comencem amb l’SCV:** 
  
-1.  Crea el projecte al SCV al núvol. Comença a actualitzar el fitxer README.md amb el títol i 
-descripció breu del projecte.  
+1.  Crea el projecte al SCV al núvol. Comença a actualitzar el fitxer README.md amb el títol i descripció breu del projecte.  
  
-2.  Crea un fitxer anomenat practica.md per respondre a les preguntes i penjar les captures de 
-pantalla d’aquest enunciat. 
+2.  Crea un fitxer anomenat practica.md per respondre a les preguntes i penjar les captures de pantalla d’aquest enunciat. 
  
   * A  partir  d’ara  hauràs d’anar actualitzant tant el fitxer README.md com practica.md. Els fitxers han d’estar escrits en Markdown.
  
