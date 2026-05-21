@@ -18,7 +18,7 @@ Per fer aquesta pràctica necessites: SCV al núvol (GitHub o GitLab) i Docker
     - Comandes principals per operar l'entorn (com fer consultes i crear dades) 
     - Explicació dels volums i xarxes configurats 
  
-  En finalitzar la pràctica el fitxer practica.md haurà de tenir: 
+  * En finalitzar la pràctica el fitxer practica.md haurà de tenir: 
     - Respostes a les preguntes teòriques de tots els blocs 
     - Captures de pantalla que es demanen. 
  
