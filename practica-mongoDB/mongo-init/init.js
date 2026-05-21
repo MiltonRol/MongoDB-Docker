@@ -26,6 +26,64 @@ db.productes.insertMany([
     etiquetes: ["esport", "rebaixes"],
     creat_el: new Date()
   },
+  { nom: "Samarreta Esportiva",
+    preu: 25.5,
+    categoria: "roba",
+    estoc: 20,
+    valoracio: 4.2,
+    actiu: true,
+    etiquetes: ["esport", "rebaixes"],
+    creat_el:   new Date()
+  },
+  { nom: "Pantalons de Xandall",
+    preu: 39.9, categoria: "roba",
+    estoc: 15,
+    valoracio: 4.5,
+    actiu: true,
+    etiquetes: ["esport", "confort"],
+    creat_el: new Date()
+  },
+  { nom: "Jaqueta Tècnica Impermeable",
+    preu: 89.0,
+    categoria: "roba",
+    estoc: 8,
+    valoracio: 4.8,
+    actiu: true,
+    etiquetes: ["muntanya", "hivern"],
+    creat_el: new Date()
+  },
+  { nom: "Sabatilles de Running Pro",
+    preu: 110.0,
+    categoria: "calçat",
+    estoc: 25,
+    valoracio: 4.7,
+    actiu: true,
+    etiquetes: ["córrer", "professional"],
+    creat_el: new Date()
+  },
+  { nom: "Motxilla Urbana 20L",
+    preu: 45.5,
+    categoria: "complements",
+    estoc: 30,
+    valoracio: 4.1,
+    actiu: true,
+    etiquetes: ["ciutat", "viatges"],
+    creat_el: new Date()
+  },
+  { nom: "Gorra amb Protecció UV",
+    preu: 18.0,
+    categoria: "complements",
+    estoc: 50,
+    valoracio: 3.9,
+    actiu: false,
+    etiquetes: ["sol", "estiu"],
+    creat_el: new Date()
+  },
+  { nom: "Guants de Gimnàs", preu: 12.9, categoria: "complements", estoc: 40, valoracio: 4.3, actiu: true, etiquetes: ["pes", "gimnàs"], creat_el: new Date() },
+  { nom: "Calcetins Tècnics Transpirables", preu: 9.5, categoria: "roba", estoc: 100, valoracio: 4.6, actiu: true, etiquetes: ["esport", "confort"], creat_el: new Date() },
+  { nom: "Ampolleta d'Aigua Esportiva", preu: 14.0, categoria: "complements", estoc: 60, valoracio: 4.0, actiu: true, etiquetes: ["hidratació", "ecològic"], creat_el: new Date() },
+  { nom: "Rellotge Intel·ligent Esportiu", preu: 199.9, categoria: "electrònica", estoc: 10, valoracio: 4.9, actiu: true, etiquetes: ["tecnologia", "salut"], creat_el: new Date() }
+
   // ... añade hasta tener mínimo 10 productos
 ]);
 
@@ -54,6 +112,57 @@ db.clients.insertMany([
       ciutat: "L'Hospitalet",
       codi_postal: "08902",
       pais: "Espanya"
+    },
+    creat_el: new Date()
+  },
+  {
+    nom: "Juan",
+    cognoms: "Sanchez López",
+    email: "SanLo@example.com",
+    telefon: "+34 600003001",
+    adreca: {
+      carrer: "Carrer Major 11",
+      ciutat: "Barcelona",
+      codi_postal: "08011",
+      pais: "Espanya"
+    },
+    creat_el: new Date()
+  },
+  {
+    nom: "Rosa",
+    cognoms: "Lietis",
+    email: "Roselie@example.com",
+    telefon: "+34 630000001",
+    adreca: {
+      carrer: "Carrer ",
+      ciutat: "Barcelona",
+      codi_postal: "08001",
+      pais: "Espanya"
+    },
+    creat_el: new Date()
+  },
+  {
+    nom: "Angel",
+    cognoms: "Presley",
+    email: "Ley@example.com",
+    telefon: "+34 600120001",
+    adreca: {
+      carrer: "Carrer Menor 13",
+      ciutat: "Lleida",
+      codi_postal: "18001",
+      pais: "Espanya"
+    },
+    creat_el: new Date()
+  },
+  {
+    nom: "Yafreisi",
+    cognoms: "Mota Uribe",
+    email: "Yamota@example.com",
+    telefon: "+34 630560001",
+    adreca: {
+      carrer: "Carrer Mao 16",
+      ciutat: "Santo Domingo",
+      pais: "Republica Dominicana"
     },
     creat_el: new Date()
   }
