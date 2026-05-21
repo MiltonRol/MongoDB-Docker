@@ -9,7 +9,7 @@ En aquesta pràctica construirem un entorn de bases de dades NoSQL amb MongoDB e
 
 ## Bloc  Punts  Indicadors
 
-- B0 – Documentació  10  README complet, clar i ben estructurat. Replicació entorn.
+- [B0 – Documentació  10  README complet, clar i ben estructurat. Replicació entorn.](./practica-mongoDB/Bloc0.md)
 - B1 – Docker Compose  15  Serveis funcionals
 - B2 – Model de dades, volums i persistència de dades
 - 20  Demostració persistència, model de dades consistent
