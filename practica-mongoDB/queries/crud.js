@@ -11,21 +11,53 @@ function printSeparator(title) {
 
 // 3.1 CREATE
 
-printSeparator("CREATE 1 - insertOne");
-const resultInsertOne = db.productes.insertOne({
-  nom: "Auriculars Bluetooth",
-  preu: 59.99,
-  categoria: "electrònica",
-  estoc: 15,
-  valoracio: 4.3,
-  actiu: true,
-  etiquetes: ["audio", "oferta"],
-  creat_el: new Date()
-});
-printjson(resultInsertOne);
+function createOne(nuevoProducto) {
+  
+  printSeparator("CREATE 1 - insertOne");
+  try {
+    db.productes.insertOne(nuevoProducto);
+    
+    console.log("El producto "+nuevoProducto.nom+" ha sido añadido");
+    
+  } catch (error) {
+    console.log("Hubo un problema al añadir el producto "+nuevoProducto.nom)
+  }
+}
 
-printSeparator("CREATE 2 - insertMany (ofertes)");
-const resultInsertMany = db.productes.insertMany([
+  const testCreate ={
+    nom: "Auriculars Bluetooth",
+    preu: 59.99,
+    categoria: "electrònica",
+    estoc: 15,
+    valoracio: 4.3,
+    actiu: true,
+    etiquetes: ["audio", "oferta"],
+    creat_el: new Date()}
+    
+    createOne(testCreate);
+    
+    
+
+    
+
+    
+  function createMany(arrayJson){
+      
+  printSeparator("CREATE 2 - insertMany (ofertes)");
+  try {
+    nuevosProductos = db.productes.insertMany(arrayJson)
+
+    for ( let i = 0 ; i < arrayJson.toArray() ;i++){
+      console.log(i.nom)
+      
+    }
+  } catch (error) {
+    console.log("Ha habido un error con el producto")
+  }
+}
+/*
+let testCreateMany = [
+  
   {
     nom: "Ratolí Òptic Bàsic",
     preu: 9.99,
@@ -56,39 +88,99 @@ const resultInsertMany = db.productes.insertMany([
     etiquetes: ["oferta", "oficina"],
     creat_el: new Date()
   }
-]);
-printjson(resultInsertMany);
+
+  createMany(testCreateMany)
+]; */
+
 
 // 3.2 READ
 
-printSeparator("READ 3 - Llistar tots els productes");
-const totsProductes = db.productes.find({});
-totsProductes.forEach(doc => printjson(doc));
 
-printSeparator("READ 4 - Productes amb preu < 50");
-const productesMenys50 = db.productes.find({ preu: { $lt: 50 } });
-productesMenys50.forEach(doc => printjson(doc));
+function llistarAll(){
+  printSeparator("READ 3 - Llistar tots els productes");
+  let totsProductes = db.productes.find({});
+  if (totsProductes != null){
 
-printSeparator("READ 5 - Productes d'una categoria amb estoc > 0");
-const categoria = "electrònica";
-const productesCategoriaEstoc = db.productes.find({
-  categoria: categoria,
-  estoc: { $gt: 0 }
-});
-productesCategoriaEstoc.forEach(doc => printjson(doc));
+    totsProductes.forEach(doc => printjson(doc));
+  }else{
+    console.log("No hi han productes")
+  }
+}
 
-printSeparator("READ 6 - Productes valoracio >= 4.0 (nom, preu, valoracio)");
-const productesBonaValoracio = db.productes.find(
-  { valoracio: { $gte: 4.0 } },
-  { nom: 1, preu: 1, valoracio: 1, _id: 0 }
-);
-productesBonaValoracio.forEach(doc => printjson(doc));
 
-printSeparator("READ 7 - Productes per etiqueta");
-const etiqueta = "oferta";
-const productesEtiqueta = db.productes.find({ etiquetes: etiqueta });
-productesEtiqueta.forEach(doc => printjson(doc));
 
+function filtroPrecio(min,max){
+  printSeparator("READ 4 - Productes amb preu entre"+min+" i "+max+"");
+  try {
+    
+    let productesResult = db.productes.find({ preu: { $lt: max, $and, $gt:min } });
+    if(productesResult != null){
+
+      productesResult.forEach(doc => printjson(doc));
+    }else{
+      console.log("No hi han productes amb aquest rang de preu")
+    }
+    
+  } catch (error) {
+    console.log("Error al filtrar por precio")
+  }
+  
+}
+
+
+function filtreCategoriaEstoc(categoriaProd){
+  printSeparator("READ 5 - Productes d'una categoria amb estoc > 0");
+  
+  try {
+    productesResult = db.productes.find(
+      {
+        categoria: categoriaProd,
+        estoc: { $gt: 0 }
+      }
+    );
+    if (productesResult != null){
+      productesResult.forEach(doc => printjson(doc));
+
+    }else{
+      console.log("No hi han productes d'aquesta categoria")
+    }
+
+  } catch (error) {
+    console.log("Error al filtar per categoria")
+  }
+}
+
+/*let categoria = "electrònica";
+filtreCategoriaEstoc(categoria);
+*/
+
+
+function filtreValoració(valoracio){
+  printSeparator("READ 6 - Productes valoracio >= "+valoracio+" (nom, preu, valoracio)");
+  
+  try {
+    let productesBonaValoracio = db.productes.find(
+      { valoracio: { $gte:valoracio } },
+      { nom: 1, preu: 1, valoracio: 1 }
+    );
+    productesBonaValoracio.forEach(doc => printjson(doc));
+  
+  } catch (error) {
+    console.log("Error al filtrar per Valoració")
+  }
+}
+
+function filtreEtiqueta(etiqueta){
+  printSeparator("READ 7 - Productes per etiqueta");
+  try {
+    let productesEtiqueta = db.productes.find({ etiquetes: etiqueta });
+    productesEtiqueta.forEach(doc => printjson(doc));
+    
+    
+  } catch (error) {
+    console.log("Error al filtrar per etiqueta")
+  }
+}
 // 3.3 UPDATE
 
 printSeparator("UPDATE 8 - Actualitzar preu d'un producte");
@@ -128,3 +220,7 @@ printjson(resultDeleteOne);
 printSeparator("DELETE 13 - Eliminar tots els productes de categoria 'ofertes'");
 const resultDeleteMany = db.productes.deleteMany({ categoria: "ofertes" });
 printjson(resultDeleteMany);
+
+
+
+

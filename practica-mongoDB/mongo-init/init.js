@@ -79,10 +79,41 @@ db.productes.insertMany([
     etiquetes: ["sol", "estiu"],
     creat_el: new Date()
   },
-  { nom: "Guants de Gimnàs", preu: 12.9, categoria: "complements", estoc: 40, valoracio: 4.3, actiu: true, etiquetes: ["pes", "gimnàs"], creat_el: new Date() },
-  { nom: "Calcetins Tècnics Transpirables", preu: 9.5, categoria: "roba", estoc: 100, valoracio: 4.6, actiu: true, etiquetes: ["esport", "confort"], creat_el: new Date() },
-  { nom: "Ampolleta d'Aigua Esportiva", preu: 14.0, categoria: "complements", estoc: 60, valoracio: 4.0, actiu: true, etiquetes: ["hidratació", "ecològic"], creat_el: new Date() },
-  { nom: "Rellotge Intel·ligent Esportiu", preu: 199.9, categoria: "electrònica", estoc: 10, valoracio: 4.9, actiu: true, etiquetes: ["tecnologia", "salut"], creat_el: new Date() }
+  { nom: "Guants de Gimnàs",
+    preu: 12.9,
+    categoria: "complements",
+    estoc: 40,
+    valoracio: 4.3,
+    actiu: true,
+    etiquetes: ["pes", "gimnàs"],
+    creat_el: new Date() },
+  { nom: "Calcetins Tècnics Transpirables",
+    preu: 9.5,
+    categoria: "roba",
+    estoc: 100,
+    valoracio: 4.6,
+    actiu: true,
+    etiquetes: ["esport", "confort"],
+    creat_el: new Date()
+  },
+  { nom: "Ampolleta d'Aigua Esportiva",
+    preu: 14.0,
+    categoria: "complements",
+    estoc: 60,
+    valoracio: 4.0,
+    actiu: true,
+    etiquetes: ["hidratació", "ecològic"],
+    creat_el: new Date()
+  },
+  { nom: "Rellotge Intel·ligent Esportiu",
+    preu: 199.9,
+    categoria: "electrònica",
+    estoc: 10,
+    valoracio: 4.9,
+    actiu: true,
+    etiquetes: ["tecnologia", "salut"],
+    creat_el: new Date()
+  }
 
   // ... añade hasta tener mínimo 10 productos
 ]);
@@ -166,7 +197,6 @@ db.clients.insertMany([
     },
     creat_el: new Date()
   }
-  // ... mínimo 10 clientes
 ]);
 
 // 3. Crear colección 'comandes'

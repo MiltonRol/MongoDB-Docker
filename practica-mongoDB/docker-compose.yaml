@@ -13,6 +13,7 @@ services:                   # Aquí defines los servicios (contenedores) que qui
     volumes:                # Volúmenes (persistencia de datos y scripts de init)
       - ./data:/data/db                 # Bind mount: carpeta local ./data → /data/db en el contenedor
       - ./mongo-init:/docker-entrypoint-initdb.d  # Scripts de inicialización
+      - ./queries:/queries
     networks:               # Redes a las que se conecta este servicio
       - xarxa-botiga
     healthcheck:
