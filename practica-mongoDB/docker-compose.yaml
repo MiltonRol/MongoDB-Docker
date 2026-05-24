@@ -8,8 +8,8 @@ services:                   # Aquí defines los servicios (contenedores) que qui
     ports:
       - "27017:27017"       # host:contenedor → expone el puerto 27017 del contenedor al host
     environment:            # Variables de entorno que se pasan al contenedor
-      MONGO_INITDB_ROOT_USERNAME: alumne   # Usuario administrador de MongoDB
-      MONGO_INITDB_ROOT_PASSWORD: alumne   # Contraseña del admin
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}   # Usuario administrador de MongoDB
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD} # Contraseña del admin
     volumes:                # Volúmenes (persistencia de datos y scripts de init)
       - ./data:/data/db                 # Bind mount: carpeta local ./data → /data/db en el contenedor
       - ./mongo-init:/docker-entrypoint-initdb.d  # Scripts de inicialización
@@ -28,9 +28,11 @@ services:                   # Aquí defines los servicios (contenedores) que qui
     ports:
       - "8081:8081"         # Accederás a Mongo Express en http://localhost:8081
     environment:
-      ME_CONFIG_MONGODB_URL: mongodb://alumne:alumne@mongodb-botiga:27017/?authSource=admin
-      ME_CONFIG_MONGODB_ADMINUSERNAME: alumne
-      ME_CONFIG_MONGODB_ADMINPASSWORD: alumne
+      ME_CONFIG_MONGODB_URL: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@mongodb-botiga:27017/?authSource=admin
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_USER}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_PASSWORD}
+      ME_CONFIG_BASICAUTH_USERNAME: ${MONGO_USER}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${MONGO_PASSWORD}
       #ME_CONFIG_MONGODB_URL: mongodb://alumne:alumne@mongodb-botiga:27017/
       # URL de conexión a MongoDB:
       # mongodb://usuario:password@nombre-servicio:puerto/

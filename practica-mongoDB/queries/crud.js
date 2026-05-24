@@ -25,7 +25,7 @@ function createOne(nuevoProducto) {
 }
 
   const testCreate ={
-    nom: "Auriculars Bluetooth",
+    nom: "Auriculars Bluetooth 3",
     preu: 59.99,
     categoria: "electrònica",
     estoc: 15,
@@ -34,28 +34,35 @@ function createOne(nuevoProducto) {
     etiquetes: ["audio", "oferta"],
     creat_el: new Date()}
     
-    createOne(testCreate);
+//createOne(testCreate);
     
     
 
     
 
     
-  function createMany(arrayJson){
-      
+function createMany(arrayJson) {
   printSeparator("CREATE 2 - insertMany (ofertes)");
   try {
-    nuevosProductos = db.productes.insertMany(arrayJson)
-
-    for ( let i = 0 ; i < arrayJson.toArray() ;i++){
-      console.log(i.nom)
-      
+    let insert = db.productes.insertMany(arrayJson);
+    
+    try {
+  
+      for (let i = 0; i < arrayJson.length; i++) {
+        console.log(arrayJson[i].nom);
+      }
+  
+    } catch (error) {
+      console.log("Ha habido un error al obtener el nombre del producto:", error.message);
     }
+
+    return insert;
   } catch (error) {
-    console.log("Ha habido un error con el producto")
+    console.log("Ha habido un error con la inserción:", error.message);
   }
 }
-/*
+
+
 let testCreateMany = [
   
   {
@@ -88,9 +95,8 @@ let testCreateMany = [
     etiquetes: ["oferta", "oficina"],
     creat_el: new Date()
   }
-
-  createMany(testCreateMany)
-]; */
+];
+//createMany(testCreateMany)
 
 
 // 3.2 READ
@@ -107,30 +113,26 @@ function llistarAll(){
   }
 }
 
-
+//llistarAll()
 
 function filtroPrecio(min,max){
   printSeparator("READ 4 - Productes amb preu entre"+min+" i "+max+"");
   try {
-    
-    let productesResult = db.productes.find({ preu: { $lt: max, $and, $gt:min } });
+    let productesResult = db.productes.find({ preu: { $lt: max, $gt:min } });
     if(productesResult != null){
 
       productesResult.forEach(doc => printjson(doc));
     }else{
       console.log("No hi han productes amb aquest rang de preu")
     }
-    
   } catch (error) {
     console.log("Error al filtrar por precio")
   }
-  
 }
-
+//filtroPrecio(10,50)
 
 function filtreCategoriaEstoc(categoriaProd){
   printSeparator("READ 5 - Productes d'una categoria amb estoc > 0");
-  
   try {
     productesResult = db.productes.find(
       {
@@ -140,19 +142,17 @@ function filtreCategoriaEstoc(categoriaProd){
     );
     if (productesResult != null){
       productesResult.forEach(doc => printjson(doc));
-
     }else{
       console.log("No hi han productes d'aquesta categoria")
     }
-
   } catch (error) {
     console.log("Error al filtar per categoria")
   }
 }
 
-/*let categoria = "electrònica";
-filtreCategoriaEstoc(categoria);
-*/
+let categoria = "electrònica";
+//filtreCategoriaEstoc(categoria);
+
 
 
 function filtreValoració(valoracio){
@@ -169,58 +169,96 @@ function filtreValoració(valoracio){
     console.log("Error al filtrar per Valoració")
   }
 }
+//filtreValoració(4)
+
 
 function filtreEtiqueta(etiqueta){
   printSeparator("READ 7 - Productes per etiqueta");
   try {
     let productesEtiqueta = db.productes.find({ etiquetes: etiqueta });
     productesEtiqueta.forEach(doc => printjson(doc));
-    
-    
   } catch (error) {
     console.log("Error al filtrar per etiqueta")
   }
 }
+let etiqueta = "esport"
+//filtreEtiqueta(etiqueta)
+
 // 3.3 UPDATE
 
-printSeparator("UPDATE 8 - Actualitzar preu d'un producte");
-const resultUpdateOne = db.productes.updateOne(
-  { nom: "Auriculars Bluetooth" },   // filtre
-  { $set: { preu: 49.99 } }          // canvi
-);
-printjson(resultUpdateOne);
 
-printSeparator("UPDATE 9 - Augmentar estoc d'una categoria en 10 unitats");
-const resultUpdateManyEstoc = db.productes.updateMany(
-  { categoria: "ofertes" },
-  { $inc: { estoc: 10 } }
-);
-printjson(resultUpdateManyEstoc);
+function updatePriceByName(nomProducte,preu){
+  printSeparator("UPDATE 8 - Actualitzar preu d'un producte");
+  db.productes.updateOne({nom : nomProducte},{$set:{preu}})
+  let resul = db.productes.find({nom: nomProducte, preu: preu})
+  print(resul)
+}
+//updatePriceByName("Samarreta Esportiva",1234)
 
-printSeparator("UPDATE 10 - Afegir nova etiqueta a un producte");
-const resultAddTag = db.productes.updateOne(
-  { nom: "Teclat Mecànic" },
-  { $push: { etiquetes: "nou-model" } }
-);
-printjson(resultAddTag);
 
-printSeparator("UPDATE 11 - Desactivar productes sense estoc");
-const resultDeactivate = db.productes.updateMany(
-  { estoc: 0 },
-  { $set: { actiu: false } }
-);
-printjson(resultDeactivate);
+function addEstocByCategoria(categoria,estoc){
+  printSeparator("UPDATE 9 - Augmentar estoc d'una categoria en 10 unitats");
+  
+  let resultUpdateManyEstoc = db.productes.updateMany(
+    { categoria: categoria },
+    { $inc: { estoc: estoc } }
+  );
+  printjson(resultUpdateManyEstoc);
+}
+//addEstocByCategoria("roba",10)
+
+
+function afegirEtiqueta(nomProducte,etiqueta){
+  printSeparator("UPDATE 10 - Afegir nova etiqueta a un producte");
+  
+  try {
+    db.productes.updateOne(
+      { nom: nomProducte },
+      { $push: { etiquetes: etiqueta } }
+    );
+  } catch (error) {
+    console.log(error.message)
+  }
+  let resultAddTag =  db.productes.find({etiquetes: etiqueta})
+  printjson(resultAddTag);
+}
+//afegirEtiqueta("Pantalons de Xandall","Test New Etiqueta");
+
+
+function cleanStock(){
+  printSeparator("UPDATE 11 - Desactivar productes sense estoc");
+  let resultClean = db.productes.updateMany(
+    { estoc: 0 },
+    { $set: { actiu: false } }
+  );
+  printjson(resultClean);
+}//cleanStock()
+
 
 // 3.4 DELETE
 
-printSeparator("DELETE 12 - Eliminar un producte pel seu nom");
-const resultDeleteOne = db.productes.deleteOne({ nom: "Ratolí Òptic Bàsic" });
-printjson(resultDeleteOne);
+function deleteByName(nomProducte){
+  printSeparator("DELETE 12 - Eliminar un producte pel seu nom");
+  let resultDelete = db.productes.deleteOne({ nom: nomProducte });
+  printjson(resultDelete);
+  
+}
+//deleteByName("Auriculars Bluetooth 3")
 
-printSeparator("DELETE 13 - Eliminar tots els productes de categoria 'ofertes'");
-const resultDeleteMany = db.productes.deleteMany({ categoria: "ofertes" });
-printjson(resultDeleteMany);
 
+function deleteByCategory(categoria){
+  printSeparator("DELETE 13 - Eliminar tots els productes de categoria 'ofertes'");
+  
+  try {
+    let resultDelete = db.productes.deleteMany({ categoria: categoria });
+    printjson(resultDelete);
+    
+  } catch (error) {
+  console.log("Error al eliminar els productes de la categoria: "+categoria)
+  }
+}
+
+//deleteByCategory("")
 
 
 
