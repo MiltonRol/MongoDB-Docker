@@ -2,7 +2,7 @@
 // por ejemplo: `mongosh "mongodb://admin:admin123@localhost:27017/botiga" crud.js`
 
 // Seleccionamos la base de datos
-db = db.getSiblingDB("botiga");
+const db = db.getSiblingDB("botiga");
 
 // Helper para imprimir separadores
 function printSeparator(title) {
@@ -194,7 +194,6 @@ function updatePriceByName(nomProducte,preu){
   print(resul)
 }
 //updatePriceByName("Samarreta Esportiva",1234)
-
 
 function addEstocByCategoria(categoria,estoc){
   printSeparator("UPDATE 9 - Augmentar estoc d'una categoria en 10 unitats");

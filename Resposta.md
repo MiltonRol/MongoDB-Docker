@@ -4,8 +4,8 @@ author: Milton Moreta
 output: pdf
 ---
 # Bloc 0
-- ![Estructura Carpetes i Archius](./practica-mongoDB/img/Estructura%20carpetas.png)
-- [URL Repositori Git]()
+![Estructura Carpetes i Archius](./practica-mongoDB/img/Estructura%20carpetas.png)
+- [URL Repositori Git](https://github.com/MiltonRol/MongoDB-Docker)
 
 # Bloc 1
 
@@ -28,6 +28,7 @@ Si un servei depen d'un altre, aquest servei no es posarà operatiu si del qual 
 
 Aixo no garanteix que el servei depenent estigui completament operatiu pero si garanteix que intentara posar-se en marxa.
 ```
+
 
 3.  Explica  quina  és  la  diferència  entre  una xarxa  bridge  per  defecte  i  una  xarxa personalitzada (amb nom) a Docker Compose.
 
