@@ -1,5 +1,5 @@
 // Este archivo lo puedes ejecutar desde el mongo shell o MongoDB CLI
-// por ejemplo: `mongosh "mongodb://admin:admin123@localhost:27017/botiga" crud.js`
+// docker exec -it mongodb-botiga mongosh -u admin -p pass --authenticationDatabase admin --file /queries/crud.js
 
 // Seleccionamos la base de datos
 const db = db.getSiblingDB("botiga");
