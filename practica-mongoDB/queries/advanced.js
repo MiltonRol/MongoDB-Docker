@@ -131,7 +131,7 @@ function preuMig(categoria){
 //preuMig("Electrònica")
 
 function facturacionCliente(){
-
+    printSeparator("Consultes Avançades 6.")
     try{
         let facturacion = db.comandes.aggregate([
         {$group: {_id: "$client_id",total_gastat: {$sum: "$total"}}}]);
@@ -140,10 +140,54 @@ function facturacionCliente(){
         console.log("Error: "+error.message+"\n- No s'han trobat comandes")
     }
 }
-facturacionCliente()
+//facturacionCliente()
+
+
+function getIndexByName(nameIdx){
+    try {
+        if (nameIdx){
+            let index = db.productes.getIndexes().find(
+                idx => idx.name === nameIdx)
+            printjson(index)
+        }else{
+            let index = db.productes.getIndexes()
+            index.forEach(i => printjson(i))
+        }
+    } catch (error) {
+        console.log("\nError: "+error.message+"\n-No se ha podido encontrar el indice")
+    }
+}
+
+
+//db.productes.createIndex({ categoria: 1 },{name: "IDX_categoria"})
+//getIndexByName("IDX_categoria")
+
+
+//db.productes.createIndex({ categoria: 1, preu: 1 },{name: "IDX_categoria_preu"})
+//getIndexByName("IDX_categoria_preu")
+
+
+//db.productes.createIndex({ nom: "text" },{name: "IDX_nom"})
+//getIndexByName("IDX_nom")
+
+
+//getIndexByName()
+
+/*
+let producto;
+
+
+db.productes.createIndex({categoria: 1},{name :"IDX_categoria"})
+producto = db.productes.find({categoria: "electrònica"}).explain("executionStats")
+printjson(producto)
 
 
 
+
+db.productes.dropIndex("IDX_categoria")
+producto = db.productes.find({categoria: "electrònica"}).explain("executionStats")
+printjson(producto)
+*/
 
 
 
